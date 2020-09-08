@@ -4,7 +4,9 @@ import TimesheetHeader from "./TimesheetHeader";
 import NewEntryForm from "./NewEntryForm";
 import EntriesList from "./EntriesTable";
 import TableControl from "./TableControll";
-import TimesheetProvider from "../providers/TimesheetProvider";
+import TimesheetProvider from "../../providers/TimesheetProvider";
+import { withAuthenticationRequired } from "@auth0/auth0-react";
+import Loading from "../Loading";
 
 
 const Timesheet = () => {
@@ -19,4 +21,6 @@ const Timesheet = () => {
     );
 }
 
-export default Timesheet;
+export default withAuthenticationRequired(Timesheet, {
+    onRedirecting: () => <Loading/>,
+});

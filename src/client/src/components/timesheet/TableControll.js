@@ -1,5 +1,5 @@
 import React from 'react';
-import {useTimesheet} from "../providers/TimesheetProvider";
+import {useTimesheet} from "../../providers/TimesheetProvider";
 
 const TableControl = () => {
     const {nextLeading, prevLeading} = useTimesheet();

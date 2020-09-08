@@ -1,8 +1,8 @@
 import React from "react";
-import {useTimesheet} from "../providers/TimesheetProvider";
+import {useTimesheet} from "../../providers/TimesheetProvider";
 import * as moment from "moment";
-import {DISPLAY_DATE_FORMAT} from "../constants";
-import {TimeOptions} from "../enums/EntryOptions";
+import {DISPLAY_DATE_FORMAT} from "../../constants";
+import {TimeOptions} from "../../enums/EntryOptions";
 
 
 const EntriesList = () => {
