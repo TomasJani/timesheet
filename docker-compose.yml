@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+  db:
+    image: postgres:alpine
+    restart: always
+    ports:
+      - 5450:5450
+    environment:
+      POSTGRES_PASSWORD: password
+
+  api:
+    depends_on:
+        - db
+    build: ./src/api
+    image: api:latest
+    ports:
+        - 5000:5000
+    restart: always
+
+  client:
+    depends_on:
+        - api
+    build: ./src/client
+    image: client:latest
+    ports:
+        - 3000:3000
+    restart: always
+    stdin_open: true
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8081:5000
