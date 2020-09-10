@@ -4,10 +4,16 @@ import {Repository} from "typeorm";
 import {DATE_FORMAT} from "../constants";
 
 class DaysController {
-    static FindOrCreateByDate = async (daysRepository: Repository<Day>, date: string, user: string): Promise<Day> => {
-        const day = await DaysController.FindByDate(daysRepository, date, user);
+    static daysRepository;
+
+    constructor(daysRepository: Repository<Day>) {
+        DaysController.daysRepository = daysRepository;
+    }
+
+    static FindOrCreateByDate = async (date: string, user: string): Promise<Day> => {
+        const day = await DaysController.FindByDate(date, user);
         if (!day) {
-            const day = await daysRepository.save(new Day(date, user));
+            const day = await DaysController.daysRepository.save(new Day(date, user));
             day.entries = [];
             return day;
         }
@@ -15,11 +21,11 @@ class DaysController {
         return day;
     }
 
-    static FindByDate = async (daysRepository: Repository<Day>, date: string, user: string): Promise<Day> =>
-        await daysRepository.findOne({date: date, user: user}, {relations: ["entries"]});
+    static FindByDate = async (date: string, user: string): Promise<Day> =>
+        await DaysController.daysRepository.findOne({date: date, user: user}, {relations: ["entries"]});
 
-    static FindByDateOrDefault = async (daysRepository: Repository<Day>, date: string, user: string): Promise<Day> => {
-        const day = await DaysController.FindByDate(daysRepository, date, user);
+    static FindByDateOrDefault = async (date: string, user: string): Promise<Day> => {
+        const day = await DaysController.FindByDate(date, user);
         if (!day) {
             const defaultDay = new Day(date, "");
             defaultDay.entries = [];
@@ -30,7 +36,7 @@ class DaysController {
     }
 
 
-    static GetDays = async (daysRepository: Repository<Day>, firstDay: string, user: string, n: number): Promise<Day[]> => {
+    static GetDays = async (firstDay: string, user: string, n: number): Promise<Day[]> => {
         const daysDates = [moment(firstDay, DATE_FORMAT)];
 
         for (let i = 0; i < n - 1; ++i)
@@ -38,7 +44,7 @@ class DaysController {
 
         return await Promise.all(
             daysDates.map(async (date) =>
-                await DaysController.FindByDateOrDefault(daysRepository, date.format(DATE_FORMAT), user))
+                await DaysController.FindByDateOrDefault(date.format(DATE_FORMAT), user))
         );
     }
 }

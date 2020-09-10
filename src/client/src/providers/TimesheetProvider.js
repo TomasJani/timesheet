@@ -19,7 +19,6 @@ export default function TimesheetProvider({children}) {
     const [nationalHolidays, getNationalHoliday] = useNationalHolidays(days);
     const [timeSpan, setTimeSpan] = useState(1);
     const [leadingDate, moveLeadingDate] = useLeadingDate(timeSpan);
-
     const [setShowAlert, intersectingAlert] = useAlert("Intersecting time spans.", "alert-danger");
     const getToken = useToken();
     const {user} = useAuth0();
