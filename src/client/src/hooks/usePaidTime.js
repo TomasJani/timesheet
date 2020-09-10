@@ -3,7 +3,7 @@ import {EntryOptions} from "../enums/EntryOptions";
 import moment from "moment";
 import {TIME_FORMAT} from "../constants";
 
-export const usePaidTime = (days) => {
+const usePaidTime = (days) => {
     const [paidHours, setPaidHours] = useState(0);
 
     const getPaidHours = async () => {
@@ -24,3 +24,5 @@ export const usePaidTime = (days) => {
 
     return {paidHours, getPaidHours}
 }
+
+export default usePaidTime;

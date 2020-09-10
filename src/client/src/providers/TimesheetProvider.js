@@ -1,8 +1,8 @@
 import React, {createContext, useContext, useEffect, useState} from "react";
 import {SERVER_BASE_URL} from "../constants";
-import {useAlert} from "../hooks/useAlert";
+import useAlert from "../hooks/useAlert";
 import {useAuth0} from "@auth0/auth0-react";
-import {usePaidTime} from "../hooks/usePaidTime";
+import usePaidTime from "../hooks/usePaidTime";
 import useLeadingDate from "../hooks/useLeadingDate";
 import useToken from "../hooks/useToken";
 import useNationalHolidays from "../hooks/useNationalHolidays";

@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 
 
-export const useAlert = (text, classes) => {
+const useAlert = (text, classes) => {
     const [showAlert, setShowAlert] = useState(false);
     const alert = showAlert ? (
         <div className={`alert alert-dismissible fade w-100 mt-3 show ${showAlert} ${classes}`} role="alert">
@@ -14,3 +14,5 @@ export const useAlert = (text, classes) => {
 
     return [setShowAlert, alert];
 }
+
+export default useAlert;

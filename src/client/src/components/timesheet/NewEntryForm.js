@@ -3,7 +3,7 @@ import {EntryOptions} from "../../enums/EntryOptions";
 import {useTimesheet} from "../../providers/TimesheetProvider";
 import moment from "moment";
 import {TIME_FORMAT} from "../../constants";
-import {useAlert} from "../../hooks/useAlert";
+import useAlert from "../../hooks/useAlert";
 import {useAuth0} from "@auth0/auth0-react";
 
 
