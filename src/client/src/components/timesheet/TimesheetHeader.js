@@ -6,12 +6,18 @@ import {TimeSpans} from "../../enums/TimeSpans";
 const TimesheetHeader = () => {
     const {timeSpan, setTimeSpan, paidHours} = useTimesheet();
 
+    function getTimeSpans() {
+        return <>
+            {TimeSpans.map(({name, value}, i) =>
+                <option key={i} value={value}>{name}</option>)}
+        </>;
+    }
+
     return (
         <div className="my-3 d-flex justify-content-between">
             <span>
                 <select className="custom-select" value={timeSpan} onChange={(e) => setTimeSpan(+e.target.value)}>
-                    {TimeSpans.map(({name, value}, i) =>
-                        <option key={i} value={value}>{name}</option>)}
+                    {getTimeSpans()}
                 </select>
             </span>
 

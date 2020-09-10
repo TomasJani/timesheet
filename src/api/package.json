@@ -13,6 +13,9 @@
    "dependencies": {
       "cors": "^2.8.5",
       "express": "^4.17.1",
+      "express-jwt": "^6.0.0",
+      "express-jwt-authz": "^2.4.1",
+      "jwks-rsa": "^1.9.0",
       "moment": "^2.27.0",
       "pg": "^7.3.0",
       "reflect-metadata": "^0.1.10",
@@ -21,6 +24,7 @@
    "scripts": {
       "lint": "eslint . --ext .ts",
       "build": "tsc --project tsconfig.json",
-      "start": "rm -rf build/ && npm run build && node ./build/index.js"
+      "start": "node ./build/index.js",
+      "re-start": "rm -rf build/ && npm run build && node ./build/index.js"
    }
 }

@@ -2,7 +2,7 @@ import moment from "moment";
 import {DATE_FORMAT, HOLIDAY_API} from "../constants";
 import {useState} from "react";
 
-export const useNationalHolidays = (days) => {
+const useNationalHolidays = (days) => {
     const [nationalHolidays, setNationalHolidays] = useState([]);
 
     const getNationalHoliday = async () => {
@@ -16,3 +16,5 @@ export const useNationalHolidays = (days) => {
 
     return [nationalHolidays, getNationalHoliday];
 }
+
+export default useNationalHolidays;

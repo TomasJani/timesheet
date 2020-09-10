@@ -20,7 +20,6 @@ class DaysController {
 
     static FindByDateOrDefault = async (daysRepository: Repository<Day>, date: string, user: string): Promise<Day> => {
         const day = await DaysController.FindByDate(daysRepository, date, user);
-        console.log(`Date: ${date} User: ${user} Day: ${day}`);
         if (!day) {
             const defaultDay = new Day(date, "");
             defaultDay.entries = [];

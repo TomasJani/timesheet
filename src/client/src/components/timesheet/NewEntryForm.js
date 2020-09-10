@@ -29,7 +29,6 @@ const NewEntryForm = () => {
         }
 
         const newEntry = {type, start, end, date, user: user.sub}
-        console.log(newEntry);
         await addEntry(newEntry);
     }
 
