@@ -18,7 +18,7 @@ export function entryRoutes(app: Application): void {
 
     app.post("/entries", async (req: Request, res: Response) => {
         const entry = new Entry(req.body.type, req.body.start, req.body.end);
-        const day = await DaysController.FindOrCreateByDate(dayRepository, req.body.date);
+        const day = await DaysController.FindOrCreateByDate(dayRepository, req.body.date, req.body.user);
 
         const checkStartEnd = moment(entry.start, TIME_FORMAT).isAfter(moment(entry.end, TIME_FORMAT));
         const doesIntercept = day.entries.find(({start, end}) =>

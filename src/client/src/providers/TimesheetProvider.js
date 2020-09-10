@@ -1,20 +1,25 @@
 import React, {createContext, useContext, useEffect, useState} from "react";
-import {DATE_FORMAT, HOLIDAY_API, SERVER_BASE_URL, TIME_FORMAT} from "../constants";
-import moment from "moment";
-import {EntryOptions} from "../enums/EntryOptions";
+import {SERVER_BASE_URL} from "../constants";
 import {useAlert} from "../hooks/useAlert";
+import {useAuth0} from "@auth0/auth0-react";
+import {usePaidTime} from "../hooks/usePaidTime";
+import {useNationalHolidays} from "../hooks/useNationalHolidays";
+import useLeadingDate from "../hooks/useLeadingDate";
 
 
 const TimesheetContext = createContext();
 export const useTimesheet = () => useContext(TimesheetContext);
 
 export default function TimesheetProvider({children}) {
-    const [leadingDate, setLeadingDate] = useState(moment().format(DATE_FORMAT)); // reducer
     const [days, setDays] = useState([]);
-    const [paidHours, setPaidHours] = useState(0);
+
+    const {paidHours, getPaidHours} = usePaidTime(days);
+    const [nationalHolidays, getNationalHoliday] = useNationalHolidays(days);
     const [timeSpan, setTimeSpan] = useState(1);
-    const [nationalHolidays, setNationalHolidays] = useState([]);
+    const [leadingDate, moveLeadingDate] = useLeadingDate(timeSpan);
+
     const [setShowAlert, intersectingAlert] = useAlert("Intersecting time spans.", "alert-danger");
+    const {user} = useAuth0();
 
     useEffect(() => {
         (async function () {
@@ -47,50 +52,17 @@ export default function TimesheetProvider({children}) {
     }
 
     const getDays = async () => {
-        const changesResponse = await fetch(`${SERVER_BASE_URL}/days/${timeSpan}?date=${leadingDate}`);
-        const newEntries = await changesResponse.json();
-        setDays([...newEntries]);
-    }
-
-    const nextLeading = async () => {
-        const day = moment(leadingDate).add(timeSpan, 'day').format(DATE_FORMAT);
-        setLeadingDate(day);
-    }
-
-    const prevLeading = async () => {
-        const day = moment(leadingDate).subtract(timeSpan, 'day').format(DATE_FORMAT);
-        setLeadingDate(day);
-    }
-
-    const getPaidHours = async () => {
-        const paidHoursArray = days.map((day) => {
-            return day.entries.reduce((acc, cv) => {
-                if (EntryOptions[cv.type].paid) {
-                    const duration = moment.duration(moment(cv.end, TIME_FORMAT).diff(moment(cv.start, TIME_FORMAT)));
-                    return acc + duration.asHours();
-                }
-                return acc;
-            }, 0)
-        })
-
-        setPaidHours(
-            paidHoursArray.reduce((acc, cv) => acc + cv, 0)
-        )
-    }
-
-    const getNationalHoliday = async () => {
-        const holidays = await Promise.all(days.map(async (day) => {
-            const date = moment(day.date, DATE_FORMAT);
-            const holidayResponse = await fetch(`${HOLIDAY_API}&year=${date.year()}&month=${date.month()+1}&day=${date.date()}`);
-            return await holidayResponse.json();
-        }));
-        setNationalHolidays(holidays);
+        const changesResponse = await fetch(`${SERVER_BASE_URL}/days/${timeSpan}?date=${leadingDate}&user=${user.sub}`);
+        const newDays = await changesResponse.json();
+        setDays([...newDays]);
     }
 
     return (
         <TimesheetContext.Provider
-            value={{days, setDays, timeSpan, setTimeSpan, paidHours, nationalHolidays, intersectingAlert, leadingDate,
-                addEntry, getEntries: getDays, nextLeading, prevLeading}}>
+            value={{
+                days, timeSpan, setTimeSpan, leadingDate, paidHours, nationalHolidays, intersectingAlert,
+                addEntry, moveLeadingDate
+            }}>
             {children}
         </TimesheetContext.Provider>
     );

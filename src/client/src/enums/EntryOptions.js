@@ -6,8 +6,3 @@ export const EntryOptions = [
     {name: "Paid leave", paid: true, color: "bg-info"},
     {name: "Unpaid leave", paid: false, color: "bg-danger"},
 ]
-
-export const TimeOptions = [
-    ...EntryOptions,
-    {name: "National holiday", paid: true, color: "bg-light text-dark"}
-]

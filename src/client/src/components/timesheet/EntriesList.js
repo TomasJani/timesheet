@@ -2,11 +2,12 @@ import React from "react";
 import {useTimesheet} from "../../providers/TimesheetProvider";
 import * as moment from "moment";
 import {DISPLAY_DATE_FORMAT} from "../../constants";
-import {TimeOptions} from "../../enums/EntryOptions";
+import {EntryOptions} from "../../enums/EntryOptions";
 
 
 const EntriesList = () => {
     const {days, nationalHolidays} = useTimesheet();
+
     return (
         <>
             <ul className="list-group mt-3">
@@ -27,7 +28,7 @@ const EntriesList = () => {
                             <span>Entries count: {day.entries.length}</span>
                         </li>
                         {day.entries.map(entity => {
-                                const option = TimeOptions[entity.type];
+                                const option = EntryOptions[entity.type];
                                 return <li
                                     key={entity.id}
                                     className={`list-group-item d-flex justify-content-between ${option.color} text-white`}>

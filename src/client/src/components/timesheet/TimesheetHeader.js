@@ -16,7 +16,7 @@ const TimesheetHeader = () => {
             </span>
 
             <span className="btn btn-primary">
-                Paid hours: <span className="badge badge-light">{paidHours}</span>
+                Paid hours: <span className="badge badge-light">{Math.round(paidHours * 100) / 100}</span>
             </span>
         </div>
     )

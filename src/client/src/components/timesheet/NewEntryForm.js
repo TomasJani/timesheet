@@ -4,6 +4,7 @@ import {useTimesheet} from "../../providers/TimesheetProvider";
 import moment from "moment";
 import {TIME_FORMAT} from "../../constants";
 import {useAlert} from "../../hooks/useAlert";
+import {useAuth0} from "@auth0/auth0-react";
 
 
 const NewEntryForm = () => {
@@ -12,8 +13,8 @@ const NewEntryForm = () => {
     const [start, setStart] = useState(moment().format(TIME_FORMAT));
     const [end, setEnd] = useState(moment().format(TIME_FORMAT));
     const [type, setType] = useState(0)
-
     const [setShowAlert, formatAlert] = useAlert("Wrong time entry format. Check your start/end time.", "alert-danger");
+    const {user} = useAuth0();
 
     useEffect(() => {
         setDate(leadingDate);
@@ -27,7 +28,8 @@ const NewEntryForm = () => {
             return;
         }
 
-        const newEntry = {type, start, end, date}
+        const newEntry = {type, start, end, date, user: user.sub}
+        console.log(newEntry);
         await addEntry(newEntry);
     }
 

@@ -1,6 +1,6 @@
 import {Column, Entity, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
-import {User} from "./User";
 import {Day} from "./Day";
+
 
 @Entity()
 export class Entry {
@@ -13,12 +13,9 @@ export class Entry {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @ManyToOne(() => User, user => user.entries)
-    manager: User;
-
     @ManyToOne(() => Day, day => day.entries)
-    day: User;
-    
+    day: Day;
+
     @Column()
     type: number;
 

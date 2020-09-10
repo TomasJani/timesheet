@@ -14,7 +14,8 @@ export function dayRoutes(app: Application): void {
 
     app.get("/days/:n", async (req: Request, res: Response) => {
         const date = req.query.date;
-        const data = await DaysController.GetDays(dayRepository, date, req.params.n);
+        const user = req.query.user;
+        const data = await DaysController.GetDays(dayRepository, date, user, req.params.n);
         const cleanData = data.filter(day => day);
         return res.send(cleanData);
     })
