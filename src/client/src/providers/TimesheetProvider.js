@@ -19,7 +19,7 @@ export default function TimesheetProvider({children}) {
     const [nationalHolidays, getNationalHoliday] = useNationalHolidays(days);
     const [timeSpan, setTimeSpan] = useState(1);
     const [leadingDate, moveLeadingDate] = useLeadingDate(timeSpan);
-    const [setShowAlert, intersectingAlert] = useAlert("Intersecting time spans.", "alert-danger");
+    const [setIntersectingAlert, intersectingAlert] = useAlert("Intersecting time spans.", "alert-danger");
     const getToken = useToken();
     const {user} = useAuth0();
 
@@ -27,6 +27,8 @@ export default function TimesheetProvider({children}) {
         (async function () {
             await getDays();
         })()
+        // No need to check getDays for changes
+        // eslint-disable-next-line
     }, [leadingDate, timeSpan])
 
     useEffect(() => {
@@ -34,6 +36,8 @@ export default function TimesheetProvider({children}) {
             await getPaidHours();
             await getNationalHoliday();
         })()
+        // No need to check getPaidHours nor getNationalHoliday for changes
+        // eslint-disable-next-line
     }, [days])
 
     const addEntry = async entry => {
@@ -47,7 +51,7 @@ export default function TimesheetProvider({children}) {
             body: JSON.stringify(entry)
         });
         if (response.status === 500) {
-            setShowAlert(true);
+            setIntersectingAlert(true);
             return;
         }
 
