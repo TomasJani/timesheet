@@ -11,10 +11,10 @@ export class Entry {
     }
 
     @PrimaryGeneratedColumn()
-    id: number;
+    id: number | undefined;
 
     @ManyToOne(() => Day, day => day.entries)
-    day: Day;
+    day: Day | undefined;
 
     @Column()
     type: number;

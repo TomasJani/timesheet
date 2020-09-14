@@ -11,6 +11,7 @@
       "typescript": "3.3.3333"
    },
    "dependencies": {
+      "@types/cors": "^2.8.7",
       "cors": "^2.8.5",
       "express": "^4.17.1",
       "express-jwt": "^6.0.0",
@@ -24,7 +25,6 @@
    "scripts": {
       "lint": "eslint . --ext .ts",
       "build": "tsc --project tsconfig.json",
-      "start": "node ./build/index.js",
-      "re-start": "rm -rf build/ && npm run build && node ./build/index.js"
+      "start": "npm run build && node ./build/index.js"
    }
 }

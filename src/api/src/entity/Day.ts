@@ -13,10 +13,10 @@ export class Day {
     }
 
     @PrimaryGeneratedColumn()
-    id: number;
+    id: number | undefined;
 
     @OneToMany(() => Entry, entry => entry.day)
-    entries: Entry[];
+    entries: Entry[] | undefined;
 
     @Column()
     user: string;

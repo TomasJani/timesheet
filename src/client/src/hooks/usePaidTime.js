@@ -1,5 +1,5 @@
 import {useState} from "react";
-import {EntryOptions} from "../enums/EntryOptions";
+import {EntryOptions} from "../data/EntryOptions";
 import moment from "moment";
 import {TIME_FORMAT} from "../constants";
 

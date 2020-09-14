@@ -1,22 +1,21 @@
 import {Application, Request, Response} from "express";
-import {getConnection} from "typeorm";
-import {Day} from "../entity/Day";
-import DaysController from "../controllers/DaysController";
+import DayService from "../services/DayService";
 
 
 export function dayRoutes(app: Application): void {
-    const dayRepository = getConnection().getRepository(Day);
 
     app.get("/days", async function(req: Request, res: Response) {
-        const days = await dayRepository.find({relations: ["entries"]});
+        const days = await DayService.GetDays();
         return res.json(days);
     });
 
     app.get("/days/:n", async (req: Request, res: Response) => {
-        const date = String(req.query.date);
-        const user = String(req.query.user);
-        const n = +req.params.n;
-        const data = await DaysController.GetDays(date, user, n);
+        const {date, user} = req.query;
+        const {n} = req.params;
+        if (date === undefined || user === undefined || n === undefined)
+            return res.status(405).send();
+
+        const data = await DayService.GetUsersDays(String(date), String(user), +n);
         return res.send(data.filter(day => day));
     })
 }

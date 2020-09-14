@@ -11,10 +11,12 @@ import Loading from "../Loading";
 const Timesheet = () => {
     return (
         <TimesheetProvider>
-            <TimesheetHeader/>
-            <NewEntryForm/>
-            <TableControl/>
-            <EntriesList/>
+            <div className="container">
+                <TimesheetHeader/>
+                <NewEntryForm/>
+                <TableControl/>
+                <EntriesList/>
+            </div>
         </TimesheetProvider>
     );
 }

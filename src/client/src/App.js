@@ -18,12 +18,10 @@ function App() {
     return (
         <>
             <Navbar/>
-            <div className="container">
                 <Switch>
                     <Route path="/" exact component={Homepage}/>
                     <Route path="/app" component={Timesheet}/>
                 </Switch>
-            </div>
             <Footer/>
         </>
     );

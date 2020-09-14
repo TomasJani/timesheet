@@ -4,8 +4,7 @@ WORKDIR /usr/src/app
 
 COPY . .
 
-RUN npm install
-RUN npm run build
+RUN npm install --silent
 
 EXPOSE 5000
 

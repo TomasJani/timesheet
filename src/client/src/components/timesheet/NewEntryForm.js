@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {EntryOptions} from "../../enums/EntryOptions";
+import {EntryOptions} from "../../data/EntryOptions";
 import {useTimesheet} from "../../providers/TimesheetProvider";
 import moment from "moment";
 import {TIME_FORMAT} from "../../constants";
@@ -29,6 +29,7 @@ const NewEntryForm = () => {
         }
 
         const newEntry = {type, start, end, date, user: user.sub}
+        console.log(newEntry);
         await addEntry(newEntry);
     }
 

@@ -1,4 +1,4 @@
-import {EntryOptions} from "../../../enums/EntryOptions";
+import {EntryOptions} from "../../../data/EntryOptions";
 import React from "react";
 
 

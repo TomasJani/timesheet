@@ -1,6 +1,6 @@
 import React from "react";
 import {useTimesheet} from "../../providers/TimesheetProvider";
-import {TimeSpans} from "../../enums/TimeSpans";
+import {TimeSpans} from "../../data/TimeSpans";
 
 
 const TimesheetHeader = () => {
