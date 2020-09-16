@@ -14,7 +14,7 @@ export function routes(app: Application): void {
 
     app.use(bodyParser.json());
     app.use(cors(corsOptions));
-    // app.use(checkJwt);
+    app.use(checkJwt);
 
     entryRoutes(app);
     dayRoutes(app);
