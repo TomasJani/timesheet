@@ -70,7 +70,6 @@ export default function TimesheetProvider({children}) {
                 headers: {'Authorization': `Bearer ${token}`}
             }
         );
-        console.log(`${SERVER_BASE_URL}/days/${timeSpan}?date=${leadingDate}&user=${user.sub}`);
         const newDays = await changesResponse.json();
         newDays.forEach(day => day.entries.sort(compareDates));
         setDays([...newDays]);

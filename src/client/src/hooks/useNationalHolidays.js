@@ -8,7 +8,13 @@ const useNationalHolidays = (days) => {
     const getNationalHoliday = async () => {
         const holidays = await Promise.all(days.map(async (day) => {
             const date = moment(day.date, DATE_FORMAT);
-            const holidayResponse = await fetch(`${HOLIDAY_API}&year=${date.year()}&month=${date.month()+1}&day=${date.date()}`);
+            const holidayResponse = await fetch(
+                `${HOLIDAY_API}&year=${date.year()}&month=${date.month()+1}&day=${date.date()}`
+            );
+            if (holidayResponse.status === 422) {
+                console.warn("Holiday API reached its monthly limits.");
+                return;
+            }
             return await holidayResponse.json();
         }));
         setNationalHolidays(holidays);
